@@ -122,6 +122,7 @@ var student = {
     이름: '홍길동', 국어: 92, 수학: 98, 영어: 96, 과학: 98
 };
 // -in 키워드 : 해당 키가 객체 안에 있는지 확인
+//             터미널 창에 true or false로 표시해줌.
 var output = '';
 output += "'이름' in student: " + ('이름' in student) + '\n';
 output += "'성별' in student: " + ('성별' in student) + '\n';
