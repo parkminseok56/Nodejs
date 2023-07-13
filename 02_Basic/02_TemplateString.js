@@ -5,7 +5,7 @@
 var num1 = 1;
 var num2 = 2;
 var result = 3;
-var string1 = num1 + '더하기' + num2 + ' 는 \'' + result + '\''; 
+   var string1 = num1 + '더하기' + num2 + ' 는 \'' + result + '\''; 
 // var string1 = num1 + '더하기' + num2 + " 는 '" + result + "'"; 
 console.log('+ 기호로 이어붙인 결과 : ' , string1);
 
@@ -15,7 +15,7 @@ console.log('+ 기호로 이어붙인 결과 : ' , string1);
 // 전체 문자열은 `(그레이브-틸드 기호아래에 있는 따옴표와 비슷한 기호)로 묶고 그 안에 
 // 어퍼스토피(작은 따옴표)와 큰 따옴표를 자유롭게 사용하며, ${ 변수이름 } 를 이용하여 변수의 값을 문자열 안에 삽입함.
 
-let string2 = `${num1} 더하기 ${num2}은 ${result}이다.'`;
+let string2 = `${num1} 더하기 ${num2}은 ${result}이다.`;
 console.log(`Template String구성 결과 : ` , string2);
 
 
