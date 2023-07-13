@@ -201,29 +201,69 @@ console.log();
 
 // 함수 하나를 생성하되, 함수 안에 this를 이용한 변수에 값을 넣으면 그 이름의 멤버 변수가 만들어지고,
 // 최종적으로 그 변수들을 멤버로 하는 객체가 만들어지는 생성자 함수로 인식더됨.
-function student(name, korean, math, english, science) {
+function Student(name, korean, math, english, science) {
     this.name = name;
     this.kor = korean;
     this.math = math;
     this.english = english;
-    this.name = science;
-    this.getSum = function () {
+    this.science = science;
+    this.getSum = function() {
         return this.kor + this.math + this.english + this.science;
     }
-    this.getAvg = function () {
+    this.getAvg = function() {
         return this.getSum() / 4;
     }
-    this.getAvg = function () {
+    this.toString = function() {
         return `이름:${this.name} | 총점:${this.getSum()} | 평균:${this.getAvg()}`;
     }
 }      // 객체가 만들어지기 위한 생성자 함수
+console.log();
 
-var std1 = new student('홍길동' , 88,78,98,87);
-var std2 = new student('홍길남' , 77,45,65,87);
-var std3 = new student('홍길서' , 76,98,35,45);
+Student.music = 100; // Student 생성자 함수에 속성 추가 X   
+
+var std1 = new Student('홍길동' , 88,78,98,87);
+var std2 = new Student('홍길남' , 77,45,65,87);
+var std3 = new Student('홍길서' , 76,98,35,45);
 console.log( std1.toString());
 console.log( std2.toString());
 console.log( std3.toString());
+
+console.log();
+//std1.music = 100;  // std1 객체에 music 속성 추가 성공
+
+console.log('music : ' , std1.music);
+console.log('music : ' , std2.music);
+console.log('music : ' , std3.music);
+
+
+// 7. 프로토타입
+// - 생성자 함수를 사용해 생성된 객체가 공통으로 가지는 공간.
+// - 자바스크립트의 모든 생성자 함수는 내부의 this 변수들의 prototype을 갖음.
+//   그리고 prototype은 객체임.
+function Student(name, korean, math, english, science){
+    this.name = name;
+    this.kor = korean;
+    this.math = math;
+    this.english = english;
+    this.science = science;
+}
+// 프로토타입이란, 생성자에서 만들어진 원본 객체이며, 생성자 호출로 객체를 만들때 
+// 그 원본을 복사해서 객체를 생성함.
+// 생성자 함수가 만들어지고, 그 안에 this를 이용한 멤버변수가 정의되면,
+// 그 함수가 만들어질 객체를 위한 "프로토타입"이라고 하는 복사용 원본객체가 생성됨.
+// 프로로토타입은 생성될 객체로 복사될 원본객체이며, 객체형태로 존재함.
+
+// 즉 새로운 객체를 만들기 위해 생성되는 원본 객체임.
+
+var std1 = new Student('홍길서',87,98,87,45);
+// 위 명령이 실행되는 순간 프로토타입의 사본이 std1에 저장되면서 새로운 객체를 이룸.
+
+// 만약 생성자 함수에 추가로 멤버변수 또는 멤버메서드를 추가하려고 한다면,
+Student.prototype.music = 100;
+var std2 = new Student('홍길서',87,98,87,45);
+console.log("music : ", std2.music);
+// 새로 추가된 멤버변수 music 변수의 값을 전달인수로 전달해서 초기화 할 수는 없음.
+// 이 후에 새로 만들어지는 모든 객체의 music 변수값은 모두 100임.
 
 
 
