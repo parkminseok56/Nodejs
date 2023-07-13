@@ -95,6 +95,26 @@ for (var key in product) {
     console.log(key, ":", product[key]);
     console.log(`${key}  : ${product[key]}`);
 };
+/*
+for...in 루프는 JavaScript에서 객체의 속성을 열거하기 위해 사용되는 반복문입니다.
+이 반복문은 객체의 속성을 순회하면서 각 속성에 대해 반복 작업을 수행합니다.
+
+for...in 루프의 구문은 다음과 같습니다:
+
+for (var variable in object) {
+    // 반복 작업 수행
+}
+
+여기서 variable은 각 속성의 이름이 할당될 변수입니다. 
+object는 반복할 객체입니다. 
+반복문은 객체의 속성을 하나씩 순회하며, 각 속성의 이름이 variable에 할당됩니다.
+
+for...in 루프는 객체의 모든 열거 가능한 속성을 반복합니다. 
+이때 상속된 속성은 제외하고, 객체에 직접 정의된 속성만 반복합니다. 
+또한, 속성의 순서는 보장되지 않습니다.
+
+for...in 루프를 사용하여 객체의 속성에 접근할 수 있습니다.
+*/
 
 console.log();
 // 4.객체와 관련된 키워드
