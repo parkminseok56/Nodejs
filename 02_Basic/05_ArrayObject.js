@@ -76,19 +76,88 @@ console.log();
 // #방법 1. obj.ES6 = 'Fantastic';
 // #방법 2. obj['ES6'] = 'Fantastic';
 
-// #방법 3.
+// #방법 3. 문자들의 연산으로 변수 이름 생성
 let es = 'ES';
 obj[es+'6'] = 'Fantastic';
 
+// 위 내용을 모두 종합한 객체 생성
+const newObj = {
+    myName,
+    sayJS : function(){ console.log('JS'); },
+    sayNode,
+    [es+6] : 'Fantastic',
+};
+console.log( newObj.myName); // myName
+newObj.sayNode(); // Node
+newObj.sayJS(); // JS
+console.log( newObj.ES6);  // Fantastic
 
 
 
+console.log("------------------------------------------------------------------------------------");
+// 객체의 구조 분해
+// 객체 내부의 멤버변수 또는 멤버메서드를 별도의 변수에 따로 저장하여 별도로 사용하기 위한 문법
+const sayJ = newObj.sayJS;
+sayJ();
+const sayN = newObj.sayNode;
+sayN();
+var es6 = newObj.ES6;
+console.log(newObj.ES6);
+console.log(es6);
+const myN = newObj.myName;
+console.log(myN);
 
 
+console.log("------------------------------------------------------------------------------------");
+// OneStep 구조분해
+const newObject1 ={
+    myName1 : 'NODE.JS',
+    [es+2] : 'Fantastic',
+    sayJS : function(){ console.log('JS'); },
+    sayNo : function(){ console.log('NODE'); },
+};
+const {myName1, ES2, sayJS, sayNo} = newObject1;
+// 구조분해되어 저장될 변수들이 있는 객체에서, 변수들의 이름은 객체내부에 있는 멤버변수들의 이름과 같은 이름을 써야 함.
+console.log(myName1);
+console.log(ES2);
+sayNo();
+sayJS();
 
 
+console.log("------------------------------------------------------------------------------------");
+const candyMachine = {
+    status:{
+        name: 'node',
+        count: 5,
+    },
+    getCandy(){
+        this.status.count --;
+        return this.status.count;
+    },
+};
+// 객체의 구조 분해를 하지 않아야 하는 경우 = this를 사용하는 객체는 구조분해를 하지 않는것을 권장함.
+// var getCandy = candyMachine.getCandy;
+// getCandy(); // 에러 - Cannot read properties of undefined (reading 'count')
+// 객체 내의 메서드가 구조 분해되는 순간 안에 있던 this를 사용할 수 없게 되므로 
+// 그 안에 count 또한 없는 변수가 되어, 에러를 발생시킴.
+
+const { getCandy, status:{ count}} = candyMachine;
+// 분해하지 않으려고 하는 멤버는 중괄호안에 쓰지 않아서 분해에서 제외할 수도 있음.
 
 
+console.log();
+// 이는 아래와 같이 배열의 여러 자료를 넣고 인덱스를 이용하여 따로 추출하는 것과
+// 한 번에 추출하는 모양과 같은 형식으로 사용됨.
 
+// 하나의 변수에 하나씩 추출
+let array1 = ['nodejs',{},10,true];
+let node1 = array1[0];
+let obj3 = array1[1];
+let bool1 = array1[3];
+console.log(node1, obj3, bool1);
+console.log();
 
-
+// 한 번에 추출
+const array2 = ['nodejs',{},20,false];
+const [node2, obj2, bool2] = array2;
+console.log(node2, obj2, bool2);
