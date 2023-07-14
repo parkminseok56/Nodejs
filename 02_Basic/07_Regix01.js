@@ -141,6 +141,72 @@ a = 'fdsaabfeds';
 result=a.match(/a[.]b/g);
 console.log(result);
 
+console.log();
+/*
+- 반복 * 외 +
+- '*' 는 앞에 있는 글자의 반복 횟수를 0회차부터 카운트하여 반복된 문자열 탐색
+- '+' 는 앞에 있는 글자의 반복 횟수를 1회차부터 카운트하여 반복된 문자열 탐색
+*/
+a = 'caaaat';
+result=a.match(/ca*t/g);
+console.log(result);
+
+a = 'caaaat';
+result=a.match(/ca+t/g);
+console.log(result);
+
+a = 'ct';
+result=a.match(/ca*t/g);
+console.log(result);
+
+a = 'ct';
+result=a.match(/ca+t/g);
+console.log(result);
+
+/*
+- 반복 {m.n}
+  {m}: 앞에 위치한 글자의 m회 반복 매칭
+  a{3} : a의 3회 반복
+  - 정규 표현식 : 'ca{2,5}t'
+
+  ? : 앞에 위치한 글자의 0회 또는 1회 반복 매칭
+  a? : a의 0~1회 반복
+  - 정규 표현식 : 'ca?t'
+*/
+console.log();
+a = 'caat';
+result = a.match(/ca{2}t/g);
+console.log(result);
+a='caaaaaat';
+result = a.match(/ca{2}t/g);
+console.log(result);
+
+console.log();
+a = 'caat';
+b= a.match(/ca{2,4}t/g);
+console.log(b);
+a='caaaaaat';
+b= a.match(/ca{2,4}t/g);
+console.log(b);
+
+a ='ct';
+b = a.match(/ca?t/g);
+console.log(b);
+
+console.log();
+// 연습문제1
+// 아래 문자열 중 이름을 제외한 전화번호만 추출해서 출력하세요
+a = "park chan ho 010-1234-5674 kim min kyu 010-4444-6666 lee dae ho 011-123-2222";
+result = a.match(/\d{3}[-]\d{3,4}[-]\d{4}/g );
+console.log(result);
+
+// 연습문제1
+// 아래 문자열 중 이름을 제외한 이메일 주소만 추출해서 출력하세요
+a = "park chan ho park@naber.com kim min kyu kim@daum.net Lee dae ho lee@mthome.com";
+result = a.match(/\w*[@]\w*[.]\w* /g );
+console.log(result);
+
+
 
 
 
