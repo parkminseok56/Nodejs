@@ -39,3 +39,38 @@ arr.map(function(value,idx){
 
 
 
+// #index 요소의 추가
+console.log();
+arr.push('d'); // 배열의 끝에 요소를 추가
+console.log('배열의 끝에 요소 추가 : '  + arr);
+
+arr.unshift('A');  // 배열의 앞쪽에 요소를 추가
+console.log('배열의 앞쪽 요소 추가 : ' + arr);
+
+arr.splice(2,0,'B'); // index 2('b')의 위치에 요소를 추가 ( 내가 원하는 곳에 추가)
+// 인덱스 배열의 2에서 0을 지우고 그 자리에 'B' 를 추가해라하는 뜻
+// splice : 대체하라는 메서드
+console.log('index:2(\'b\')의 위치에 \'B\' 요소를 추가 : ' + arr);
+
+
+
+// #index 요소의 제거
+console.log();
+arr = ['a','b','c','d','e',];
+console.log('변경 전 : ' + arr);
+// index:2부터 1개의 요소('c')를 제거
+arr.splice(2,1);
+console.log('변경 후(index2 부터 1개의 요소(\'c\')를 제거): ' + arr);
+
+arr = ['a','b','c','d','e'];
+console.log('변경 전 : ' + arr);
+// index:1부터 2개의 요소('b','c')를 제거
+arr.splice(1,2);
+console.log('변경 후(index1 부터 2개의 요소(\'b\', \'c\')를 제거): ' + arr);
+console.log('\n');
+
+// delete로 배열의 요소를 삭제할 경우 값은 삭제되고, 자리 요소는 존재함.
+var arr = ['a','b','c','d','e'];
+console.log('변경 전 : ' + arr);
+delete arr[1];
+console.log('변경 후(arr[1] 삭제) : ' + arr);
