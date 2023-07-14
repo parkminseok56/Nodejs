@@ -66,3 +66,36 @@ console.log(result);
 //  a변수에서 파일의 확장자가 b로 시작하는 파일을 찾아서 출력하시오
 result = a.match(/\b\w+[.][b]\w+\b/g);
 console.log(result);
+
+console.log();
+// 연습문제 4
+a = '박길동 : park@naver.com , 김하나 : kim@daum.net , 이두울 : ee@myhome.co.kr, 웹사이트 : http://abcdefg.co.kr';
+// 이메일 주소만 추출해서 출력하되,  .net과 .com만 골라서 출력하세요
+result = a.match(/\b\w+@(?:\w+\.)*(?:net|com)\b/g);
+console.log(result);
+
+// 연습문제 5
+a = '현재 접속중인 외부 아이피는 110.8.6.181 이며, 내부 아이피는 192.168.0.44입니다';
+// 위 내용에서 아이피 주소만 매칭해서 출력하세요
+result = a.match(/\b\d{1,3}[.]\d{1,3}[.]\d{1,3}[.]\d{1,3}\b/g);
+console.log(result);
+
+
+// =========================================================================
+// REPLACE
+
+// replace 함수를 이용하여 패턴으로 매칭된 텍스트를 지정한 텍스트로 치환할 수 있음.
+a = 'blue socks and red socks';
+result = a.replace(/blue|white|red/g , 'color');
+console.log(result);
+
+a = 'park 010-1234-5678 , kim 010-8888-9999 , lee 010-1111-2222 ';
+// 정규 표현식과 replace를 이용하여 전화번호 뒷자리를 모두 마스킹(*)로 치환 하시오.
+result = a.replace(/[-]\d{4}\s/g, '-****');
+console.log(result);
+
+a ='네이버 - http://www.naver.com , 다음 - http://www.daum.net , 네이트 - http://www.nate.com';
+// 위 문자열에서 http 를 모두 https로 치환해서 출력하시오
+result = a. replace( /\w+(?=:)/g, 'https');
+console.log(result);
+
