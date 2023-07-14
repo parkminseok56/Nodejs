@@ -279,6 +279,8 @@ function Student(name, korean, math, english, science){
 var std1 = new Student('홍길서',87,98,87,45);
 // 위 명령이 실행되는 순간 프로토타입의 사본이 std1에 저장되면서 새로운 객체를 이룸.
 
+std1.music = 100; // std1 객체에만 별도로 멤버변수가 추가되는 경우
+
 // 만약 생성자 함수에 추가로 멤버변수 또는 멤버메서드를 추가하려고 한다면,
 Student.prototype.music = 100;
 var std2 = new Student('홍길서',87,98,87,45);
@@ -286,5 +288,44 @@ console.log("music : ", std2.music);
 // 새로 추가된 멤버변수 music 변수의 값을 전달인수로 전달해서 초기화 할 수는 없음.
 // 이 후에 새로 만들어지는 모든 객체의 music 변수값은 모두 100임.
 
+// 멤버 함수를 생성자에 추가하려면
+Student.prototype.getSum = function(){
+    return this.kor + this.math + this.english + this.science + this.music;
+};
+Student.prototype.getAvg = function(){
+    return this.getSum() / 5;
+};
+
+Student.prototype.toString = function(){
+    return `${this.name} | ${this.getSum()} | ${this.getAvg()}`;
+};
+
+var std4 = new Student('홍길북', 87,98,87,45);
+console.log();
+console.log(std4.toString());
 
 
+// 객체를 생성 후 맴버메서드에 멤버변수를 추가하느냐,
+// 생성자를 만들어서 프로토타입에 메서드와 변수를 추가 후 객체를 만드느냐는 선택적으로 사용할 수 있다.
+
+
+
+
+// 9. Object 객체
+// - toString() 메서드
+// - 객체를 문자열로 변환할 때 자동으로 호출.
+var obj = new Object();
+console.log(obj); // {}
+console.log(obj.toString()); // [object Object]
+
+// new Object()로 만들어진 객체에 내가 필요한 변수와 메서드를 추가하면, Obeject가 갖고 있던 
+// 요소들과 함께 사용이 가능함.
+// = toString()메서드 재정의(메서드 오버라이드.override)
+obj.name = "김하나";            // 멤버변수 추가
+obj.grade = "고등학교 1학년";    // 멤버변수 추가
+console.log( "toString 오버라이드 전 " , obj.toString());    // toString 재정의 전 호출
+obj.toString = function(){  return this.name+':'+this.grade; };
+console.log( "toString 오버라이드 후 " ,obj.toString());    // toString 재정의 후 호출
+
+// console.log 에 객체 변수 이름을 넣으면 모든 필드(함수 포함)가 객체 형태로 구성되어 출력됨.
+console.log(obj);
