@@ -146,18 +146,90 @@ let keyList = Object.keys(act);
 for(var key of keyList){
     process.stdout.write(`${key}:${act[key]}`);
 };
+console.log('\n');
 
 
 
+// # 배열의 복사
+arr1 = [1,2,3,4];
+// ... 연산자 :   [... 복사하려는 배열 이름]  
+let arr2 = [...arr1];
+console.log(arr1);
+console.log(arr2);
+
+
+arr2 = [...arr1, 5]  // 복사와 동시에 요소 추가 
+console.log(arr2);
+
+arr2.push(6);       // 복사 이 후 요소 추가
+console.log(arr2);
 
 
 
+console.log('\n');
 
 
 
+//  # arguments : 함수의 전달인수의 모두를 받아줄 수 있는 숨어있는 매개변수(배열)
+// 매개변수 유무와 상관없이 전달되는 모든 전달인수를 배열로 저장함.
+function func1(a,b,c){
+    process.stdout.write( `${a} ${b} ${c}`);
+    console.log();
+    for(var val of arguments){
+        process.stdout.write(`${val}`);
+    }                    
+}                   
+func1(1,2,3,4,5);
+console.log();
+
+// arrow 함수에는 arguments 사용이 기존 함수와 달리 어려움.
+/*
+let func2 =  ()=> {
+    for(var val of arguments){
+        process.stdout.write(`${val}`);
+    }  
+}
+*/
+//  arrow 함수에는 argument 대신 사용할 수 있는 rest라는 매개변수가 있음.
+let func2 =  (a,b,...rest)=> {
+    console.log(`${a} ${b}`);
+    for(var val of rest){       
+        process.stdout.write( `${val}  `);
+    }
+}
+// arguments와 달리 rest는 앞 선 자리에 있는 매개변수가 소진한 전달인수들을 제외한 나머지를 저장하는 배열임.
+func2(1,2,3,4,5);
+console.log('\n');
 
 
+{
+console.log();
+
+// # 구조분해 상세
+let one, two, three, four, five;
+values = [1, 2, 3];
+// 배열요소의 개수만큼 변수를 구성하여 배열의 값들을 각각의 변수에 담을 수 있음.
+[one, two, three] = values;
+console.log("A:", one, two, three);
+}
+
+// 변수의 개수를 조절해서 분해할당 하고 싶지 않은 값을 조절할 수 있음.
+[one, two] = values;
+console.log("B:", one, two);
+
+// 배열의 요수 개수보다 할당 받을 변수의 개수가 더 많다면, 남는 변수값은 undefined가 됨.
+[one, two, three, four] = values;
+console.log("C", one,two,three,four);
+
+// 2차원 또는 3차원의 복잡한 배열은 분해할당할 혈태를 맞춰서 분해함.
+[one, two, [three, four]] = [1,2 [73,74]];
+console.log("D:", one, two, three, four);
 
 
+// 분해 할당에서 제외하고자 하는 요소가 있다면, 자리를 비워두고 분해함.
+[one, ...other] = [1,2,3,4];
+console.log(other);
 
-
+// 분해에서 제외할 하나가 맨 앞에 있다면 아애뢍 같은 형태로 분해함.
+[one, ...other] = [1,2,3,4];
+console.log(other);
