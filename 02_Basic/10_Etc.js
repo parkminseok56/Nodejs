@@ -83,9 +83,69 @@ var music;
 // painting = '수채화';
 
 // 정상적인 변수의 정의와 사용은 먼저 정의하고 값을 채우고 그리고 사용하는 것.
+console.log('\n');
 
 
 
+
+//  ## 반복 실행문 for
+let arr1 = ['가','나','다','라'];
+arr1.map( (val,ind)=> {
+       process.stdout.write(`${ind}:${val}`);
+});
+console.log();
+for( var i=0; i<arr1.length; i ++){   
+    process.stdout.write(`${i}:${arr1[i]}`);
+}
+console.log();
+for( var i in arr1){   // in 에 의해서 배열의 index를 차례로 i 변수에 저장
+    process.stdout.write(`${i}:${arr1[i]}`);
+}
+console.log();
+for( const value of arr1){  // of 에 의해서 배열의 값 요소를 차례로 value 변수에 저장.
+    process.stdout.write(`${value}`);
+}
+console.log();
+for( var value of "ABC"){  // "A" , "B" ,"C" 가 각각   value 에 전달됨.
+    process.stdout.write(value + " ");
+}
+
+// forOf.js와 forOf.html 참조
+
+
+
+console.log();
+// 객체들의 배열을 for-of에 적용할 경우
+let values =[
+         {item: "선물1", amount: {apple:10, candy:20}},
+         {item: "선물2", amount: {apple:30, candy:40}}
+];
+// 배열의 요소들이 각각 하나의 값으로 구성된 경우는 of 앞에 변수가 하나만 존재하면 되지만
+// 객체가 배여르이 요소들이라면 아래와 같이 그 형태에 맞춰서 변수를 구성해줘야 적용이 가능함.
+
+// item, amount, apple, candy : 각 객체의 값들이 해당 변수에 저장될 수 있도록  구분하는 필드명
+// 각 객체 내의 값들을 저장할 변수 : one, two, five 
+for(var { item: one, amount: {apple:two,candy:five}} of values){
+    process.stdout.write(`${one} ${two} ${five}`);
+    console.log();
+};
+// for(객체를 저장할 수 있는 변수 of 갹체들은 요소로 하는 배열){}
+
+console.log();
+
+let act ={
+    soccer: "축구",
+    baseball: "야구"
+};
+// for(키 값을 받을 변수 in 객체)
+for( var k in act){
+    process.stdout.write(`${act[k]}`);
+}
+console.log();
+let keyList = Object.keys(act);
+for(var key of keyList){
+    process.stdout.write(`${key}:${act[key]}`);
+};
 
 
 
