@@ -222,9 +222,9 @@ console.log("B:", one, two);
 console.log("C", one,two,three,four);
 
 // 2차원 또는 3차원의 복잡한 배열은 분해할당할 혈태를 맞춰서 분해함.
-[one, two, [three, four]] = [1,2 [73,74]];
-console.log("D:", one, two, three, four);
 
+[one, two, [three, four]] = [1, 2, [73, 74]];
+console.log("D:", one, two, three, four);
 
 // 분해 할당에서 제외하고자 하는 요소가 있다면, 자리를 비워두고 분해함.
 [one, ...other] = [1,2,3,4];
@@ -233,3 +233,74 @@ console.log(other);
 // 분해에서 제외할 하나가 맨 앞에 있다면 아애뢍 같은 형태로 분해함.
 [one, ...other] = [1,2,3,4];
 console.log(other);
+
+
+console.log('\n');
+// 객체 구조 분해
+{
+// 필드명을 이용하여 객체의 구조 분해를 할 수 있으며, 이름이 맞지 않는 필드는 분해해서 제외시킬수 있음.
+// 또 한 필드로 존재하지 않는 변수는 undefined로 저장됨.  
+let {one, two} = {one:1, nine:9};
+console.log(one,two);
+// 위와 변수 선언과 동시에 구조 분해하는 것이 보통이며, 만약 이미 정의되어 있는 변수로
+// 구조분해 한다면 아래와 같이 괄호로 묶어서 실행함.
+let three, four;
+({three, four} = {three: 3, four: 4});
+console.log(three,four);
+}
+
+console.log('\n');
+// 구조 분해를 이용한 함수의 매개변수
+// 함수의 전달인수가 배열이거나 객체라면 그 형태대로 구조분해되어서 
+// 저장될 변수들을 매개변수로 위치시킴
+function total({one,plus: {two,five}}){
+     console.log(one,two,five);
+     console.log(one * (two + five));
+};
+total({one:5, plus: {two:2, five:5}});
+
+
+
+console.log('\n');
+// 구조분해에서 사용하는 기본값(defalut value)
+
+{         
+       // 배열 구조분해 기본값
+       let [one, two, five = 5] = [1,2];
+       console.log(one,two,five);
+     
+       // 객체 구조분해 기본값
+       let {six,seven=7}={six:6};
+       console.log(six,seven);
+       
+       // \함수의 매개변수 기본값
+       let plus = (one, two = 2) => one + two;
+       console.log(plus(1));  // two에 전송값이 없음
+       console.log(plus(1, undefined)); // two에 전송값이 없는것과 마찬가지임.
+       console.log(plus(1, 70));  // two에 전송값 70 -> 기본값 2삭제 70저장
+      
+       // 객체 또는 배열이 매개변수일때의 기본값
+       let getTotal =([one,two] = [10,20]) => one + two;
+       console.log(getTotal()); // 아무 전달인수가 없어도 one:10, two:20으로 적용
+
+       let getValue =({two: value} = {two:20}) => value;
+       console.log(getValue()); // 아무 전달인수가 없어도 two :20으로 적용.
+}
+console.log();
+// #디스트럭처링 : 객체의 필드명을 문자열의 연산으로 조합하여 생성
+{
+    let item = {
+        ["one" + "two"] : 12
+    };
+    console.log(item.onetwo);
+    item = "tennis";
+   let sports = {
+        [item]:1,
+        [item + "Game"]: "윔블던",  
+        [item + "Method"](){
+            return this[item];
+        }
+    };
+    console.log(`${sports.tennis} ${sports.tennisGame} ${sports.tennisMethod}`);
+}
+
