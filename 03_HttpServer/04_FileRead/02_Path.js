@@ -51,6 +51,7 @@ console.log('path.normalize():', path.normalize('D://heejonnk/node_js/javascript
 console.log();
 
 // 파일의 경로가 절대 경로인지 상대 경로인지 true false로 표시함.
+// 절대경로 & 상대경로 정의 정리: https://hellowwworld.tistory.com/60
 console.log('path.isAbsolute(C:\\):', path.isAbsolute('C:\\'));
 console.log('path.isAbsolute(./home):', path.isAbsolute('./home'));
 
