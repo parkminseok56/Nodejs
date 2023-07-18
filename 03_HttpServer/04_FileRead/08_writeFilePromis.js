@@ -1,4 +1,4 @@
-//08_writeFrilePromis.js
+//08_writeFilePromis.js
 
 const fs =require('fs').promises;
 
