@@ -44,10 +44,33 @@ http.createServer(
             });
                     return res.end('ok');                  
             }
-            }else if(req.method === 'PUT'){           // insert, update
+            }else if(req.method === 'PUT'){           // 특정 자료를 insert, update 할 떄
+                if( req.url.startsWith('/user/')){
+                    let body = '';
+                    // PUT 으로 전송된 url  '/user/41560148569'
+                   let urlarr = req.url.split('/');
+                   // '' / 'user' / '41560148569'
+                   const key = urlarr[2];
+                   req.on('data',(data) =>{
+                        body += data;
+                        const user = JSON.parse(body);
+                        users[key] = user.name; // users 객체의 key 값의 항목을 전송된 name으로 수정 
+                   });
+                   res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8'});
+                   return res.end('ok');
+                }
+
+
+
 
             }else if(req.method === 'DELETE'){        // delete
-
+                if( req.url.startsWith('/user/')){                    
+                   let urlarr = req.url.split('/'); // '' 'user' '41560148569'
+                   const key = urlarr[2];
+                   delete users[key];
+                   res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8'});
+                   return res.end('ok');
+                }
             }
             // 위의 각 if의 경우의 수에 req.url 이 없을 떄, 아래가 실행됨.
             res.writeHead(404);
