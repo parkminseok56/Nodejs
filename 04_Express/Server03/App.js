@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { send } = require('process');
-const app = express();
+const app = express(); 
 
 app.set( 'port',process.env.PORT || 3000);
 // app.get()  또는 app.post()등...
@@ -13,8 +12,8 @@ app.set( 'port',process.env.PORT || 3000);
 // 1.모든 라우터들이 실행되기 전 실행되는 라우터 
 // 보통 다른 라우터들의 위쪽에 작성됨.
 // 모든 라운터들이 실행되기 전 실행의 대상으로 인식됨.
-app.use((req,res)=>{
-    console.log('모든 요청에 실행하고 싶어요');
+app.use((req, res, next)=>{
+    console.log('모든 요청에 실행되여');
     next();
     // 모든 라운터에 next가 있지만 사용하지 않아서 생략된 상태임.
     // 필요하면 꺼내서 사용할 수 있음.
@@ -54,6 +53,15 @@ app.use((req, res,next)=>{
     next(); // 에러와 상관없이 미들웨어에 항상 있어야 하는 next();
 });
 
+app.get('/' , (req, res, next)=>{    
+    res.sendFile( path.join(__dirname, '/index.html') );
+});
+
+app.get('/abc' , (req, res, next)=>{    
+    res.sendFile( path.join(__dirname, '/index1.html') );
+});
+
+
 // 6.라우터와 파라미터
 // express 서버 역시 req.url에 일부로 피라미터를 사용할 수 있음.
 // https 서버에서는 이를 '/'로 split 해서 사용하거나 parsing 해서 사용했다면,
@@ -84,11 +92,10 @@ app.use((req,res,next)=>{
 
 
 // 3-2. 에러 처리 라우터
-app.use((err,req, res,next)=>{
+app.use( ( err, req, res, next )=>{
     console.error(err);
-    res.status(200),send('에러 내용을 브라우저에 알려주리 않으리?');
-    next();
- });
+    res.status(200).send('에러내용을 브라우져에 알려주지 않으리');
+});
  // 이 라우터는 "라우터 살행" 또는 미들웨이에서 에러가 발생했을 때, 실행되는 미들웨아임.
  // 에러 처리 라우터에 있는 미들웨이는 반드시 매개변수가 err,req, res,next 네 개 쓰여야 인식함.
  // 넷 중에 하나만 빠져도 에러 처리 라우터로 인식 못함. 
