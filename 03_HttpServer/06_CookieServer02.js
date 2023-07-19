@@ -26,7 +26,9 @@ const parseCookies = (cookie='')=>{
         acc[k.trim()] = decodeURIComponent(v);
         return acc;
     }, { } );   // 인코딩으로 저장한 쿠키값을 다시 디코딩해서 저장.
-    console.log(e);   // 분리된 결과들은 키:값 형태로 객체로 변환함.
+    console.log(e);   
+    // 분리된 결과들은 키:값 형태로 객체로 변환함.
+    // {mycookie: 'test',name:'scott'}
     return e;
 }
 

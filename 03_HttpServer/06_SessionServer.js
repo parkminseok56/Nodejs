@@ -43,9 +43,7 @@ http.createServer(async(res, res) =>{
            });  // session 이라는 키값을 niqueInt를 쿠키에 저장
 
            res.end();
-
-
-
+           
     }else if ( cookies.session && session[cookies.session].expires > new Date() ){
         res.writeHead(200, {'Content-Type':'text/plain; charset=utf-8' });
         res.end(`${cookies.session[cookie.session].name}님 안녕하세여`);
