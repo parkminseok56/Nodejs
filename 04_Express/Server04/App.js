@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 // app.use(morgan('combined')); 더 자세한 내용을 볼 수 도있음.
 
 // 쿠키 파서 사용을 위한 설정.
-app.unsubscribe(cookieParser());
+app.use(cookieParser());
 
 // 세션 활용을 위한 설정
 app.use(session({
@@ -43,7 +43,20 @@ app.use(express.urlencoded({extended:true})); // 바디파서 폼 데이터 모�
 // 인터넷을 포함한 네트워크에 여러 컴퓨터 또는 장치를 연결하는데 사용됨.
 
 app.get('/', (req,res)=>{
-    res.sendFile(path.join(__dirname,'/index.html'));
+    // http 서버에서 쿠키를 가공해서 원하는 항목을 꺼내는 방법
+    /* cookie.split(';').map(v => v.split('=')).reduce((acc,[k,v]))=>{
+        acc.[k.trim()] = decodeURIComponent(v);
+        return acc;
+    }, {}); */
+
+    // express 서버에서 보내온 쿠키에서 원하는 name 값을 꺼내는 방법
+    console.log(req.cookies.name);
+    if( req.cookies.name){
+        res.send(`${req.cookies.name} 님 안녕하세여` + `<br><a href="/logout">로그아웃</a>` );
+    }else{
+        res.sendFile(path.join(__dirname,'/index.html'));
+    }
+    
 })
 
 
@@ -82,7 +95,16 @@ app.post('/login',(req,res)=>{
     );
     // express 쿠기 입력에는 Location이 없기 떄문에 쿠키를 심고 이동할 경로를 별도로 지정해줌.
     res.redirect('/');
+});
 
+app.get('/logout',(req,res)=>{
+    // 쿠키의 삭제
+    res.clearCookie(
+        'name',
+        req.cookies.name,  // encodeURIComponent(name),
+        { httpOnly:true,path: '/'}
+    );
+    res.redirect('/');
 });
  
 
