@@ -16,13 +16,14 @@ app.use(session({
     secret:"abcd123",  // 세션값의 암호화
 }));
 
-app.get('/', (req,res)=>{
-    if(cookies.session.userid){
-        res.send(`${req.session[uniqueInt]}님 반갑읍니다.` + '<a href="/logout">로그아웃</a>');
-    }else{
-        res.sendFile(path.join(__dirname,'/index.html'));
+app.get('/', (req, res) => {
+    if (req.cookies.session) {
+      res.send(`${req.session[req.cookies.session]} 님 반갑습니다 <a href="/logout">로그아웃</a>`)
+    } else {
+      res.sendFile(path.join(__dirname, '/index.html'))
     }
-});
+  
+  });
 
 
 app.post('/login', (req,res)=>{
@@ -36,7 +37,7 @@ app.post('/login', (req,res)=>{
         const uniqueInt = Date.now();
         req.session[uniqueInt]=id;
         res.cookie('session',uniqueInt,{
-            expires : expires,
+            // expires : expires, 생략하면 브라우져가 닫힐 때, 쿠키도 사라짐.
             httpOnly : true,
             path : '/'
         });
@@ -58,6 +59,10 @@ app.get('/logout',(req,res)=>{
             req.session
         }
     );
+    res.clearCookie('session',req.cookies.session,{
+        httpOnly : true,
+        path : '/'
+    });
     res.redirect('/');
 });
 

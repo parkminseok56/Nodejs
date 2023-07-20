@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios@0.25.0/dist/axios.min.js"></script>
+</head>
+<body>
+    <form method="post" id="form" enctype="multipart/form-data">
+        <input type="file" name="image" /> <br>
+        <input type="text" name="title" /> <br>
+        <button type="submit">업로드</button>
+
+
+        <div id="filename"></div>
+        <div id="message"></div>
+        <div id="img"></div>
+     </form>
+     <script type="text/javascript">
+        document.getElementById('form').addEventListener('submit', async (e)=>{
+              e.preventDefault();  // submit 동작 (지금 당장 일어날 이벤트를) 멈추는 메서드
+              const formData = new FormData();
+              formData.append('title',e.target.title.value);
+              formData.append('image', e.target.image.files[0]);
+              try{
+                 const result =  await axios.post('/upload', formData);
+              }catch(e){
+
+
+              }
+           });
+     </script>
+
+</body>
+</html>
