@@ -11,8 +11,6 @@
         <input type="file" name="image" /> <br>
         <input type="text" name="title" /> <br>
         <button type="submit">업로드</button>
-
-
         <div id="filename"></div>
         <div id="message"></div>
         <div id="img"></div>
@@ -25,12 +23,14 @@
               formData.append('image', e.target.image.files[0]);
               try{
                  const result =  await axios.post('/upload', formData);
-              }catch(e){
+                 document.getElementById("message").innerHTML = "제목 : " + result.data.title;
+                 document.getElementById("filename").innerHTML = "업로드된 파일이름 : " + result.data.filename;;
+                 document.getElementById("img").innerHTML = '<img src="' + result.data.filename + '" width=200>';
 
-
-              }
+              }catch(e){}
+              e.target.image.value='';
+              e.target.title.value='';
            });
      </script>
-
 </body>
 </html>
