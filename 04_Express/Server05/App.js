@@ -25,7 +25,10 @@ app.post('/login', (req,res)=>{
     if( id=='scott' && pw=='tiger'){ // 정상 로그인
           const expires = new Date();
           expires.setMinutes(expires.getMinutes() + 1);
-          res.cookies('id',id,{
+          res.cookie(
+            'id',
+            encodeURIComponent(id),
+            {
                expires : expires,
                httpOnly : true,
                path: '/'
@@ -39,6 +42,12 @@ app.post('/login', (req,res)=>{
           return res.json({msg:'알 수 없는 이유로 로그인이 안되므니다.'});
     }
 });
+
+// 로그아웃 라우터
+app.get('/logout',(req,res)=>{
+    res.clearCookie('id',req.cookies.id,{httpOnly : true, path : '/'});
+    res.redirect('/');
+})
 
 
 app.listen(app.get('port'),()=>{console.log(app.get('port'),' 포트에서 서버 대기 중');});

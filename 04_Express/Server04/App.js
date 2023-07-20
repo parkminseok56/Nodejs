@@ -48,7 +48,7 @@ app.get('/', (req,res)=>{
         acc.[k.trim()] = decodeURIComponent(v);
         return acc;
     }, {}); */
-
+    
     // express 서버에서 보내온 쿠키에서 원하는 name 값을 꺼내는 방법
     console.log(req.cookies.name);
     if( req.cookies.name){
@@ -56,7 +56,6 @@ app.get('/', (req,res)=>{
     }else{
         res.sendFile(path.join(__dirname,'/index.html'));
     }
-    
 })
 
 
