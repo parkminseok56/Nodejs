@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+   <!-- 사용자 등록 폼-->
+   <div>
+     <form id="user-form">
+         <fieldset>
+                  <legend>사용자 등록</legend>
+                  <div><input name="username" type="text" placeholder="이름"></div>
+                  <div><input name="age" type="number" placeholder="나이"></div>
+                  <div><input name="married" type="checkbox">
+                       <label for="married">결혼여부</label>
+                  </div>
+                  <button type="submit">등록</button>
+         </fieldset>
+ </form>
+ </div><br>
+ <!-- 등록된 user 리스트-->
+  <table id="user-list" border="1">
+            <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>나이</th>
+                    <th>결혼여부</th>
+                </tr>
+           </thead>
+           <tbody>
+                 <tr>
+                     <td>{{id}}</td>
+                     <td>{{name}}</td>
+                     <td>{{age}}</td>
+                     <td>{{married}}</td>
+                 </tr>
+           </tbody>
+  </table><br>
+  <script src="sequelize.js"></script>
+
+     
+    
+</body>
+</html>

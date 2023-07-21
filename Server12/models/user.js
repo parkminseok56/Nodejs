@@ -20,6 +20,7 @@ module.exports = class User extends Sequelize.Model {
 };
 */
 
+// 외부에서 User를 require하고 , User.init( Sequelize); 이와 같이 호출될 예정임.
 
 module.exports = class User extends Sequelize.Model {
     static init( sequelize ){
@@ -40,7 +41,7 @@ module.exports = class User extends Sequelize.Model {
                     type:Sequelize.BOOLEAN,
                     allowNull:true,           
                 },
-                comment{
+                comment:{
                     type:Sequelize.TEXT,
                     allowNull:true,           
                 },
@@ -48,13 +49,23 @@ module.exports = class User extends Sequelize.Model {
                     type:Sequelize.DATE,
                     allowNull:true,           
                 },
-            }
-            ,
-
+            },
             {
-
+                // 테이블의 옵션들이 객체형식으로 정의됨.
+                sequelize, // init 함수의 매개변수에 전달된 sequelize
+                timestamps:false, // 이 속성이 true이면, createdAt, updatedAt 필드를 자동 생성함.
+                underscored:false,  // 이 속성이 true이면, createdAt, updatedAt 필드의 이름이
+                // created_at, updated_at으로 바뀜.
+                modelName : 'User', // Sequelize가 사용할 모델(테이블)의 이름
+                tableName: 'user', // mysql 데이터베이스 자체 테이블의 이름
+                paranoid:false, // 이 속성이 true이면, deleteAt 필드가 생성됨.
+                charset: 'utf8mb4',
+                collate: 'utf8mb4_general_ci',
             }
         );
     }  
-    static associate(db){}
+    static associate(db){
+            db.User.hasMany(db.Comment,{ sourcekey:'id', foreignkey:'commenter'} );
+            // User 모델의 필드값이 Comment 모델에 같은 필드값으로 여러 번 나오도록 설정(1:N 관계)
+    }
 };
