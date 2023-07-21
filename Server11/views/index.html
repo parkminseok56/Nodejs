@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>welcome to {{title}} nunjucks</h1>
+    <!-- EL 처럼 중괄호 앞에 '$'를 안 붙이고, 중괄호를 두 개 겹쳐서 전달인수를 표현할 수 있음.-->
+
+    <br><br>
+    <!-- nunjucks의 HTML 파일 삽입문법 : JSP 와 비슷하게 생긴 문법을 사용함. -->
+    <!-- 내부 변수 -->
+    {% set node = 'Node-Js' %}
+    {% set js = 'JavaScript' %}
+    <h2>{{node}} 와 {{js}}</h2>
+
+    <br><br>
+    <!-- 꺽쇠 괄호 태그의 적용 유무(safe)-->  
+    <p>{{'<strong>이스케이프</strong>'}}</p>
+    <p>{{'<strong>이스케이프 하지 않음</strong>' | safe}}</p>    
+
+    <br><br>
+    <!-- 반복문 -중괄호-퍼센트 안에 for in 작성. index는 loop.index-->
+    {% set fruits=['사과','배','오렌지','바나나','복숭아']%} <!-- 넌적스 배열 생성-->
+    <ul>
+            {% for item in fruits %}
+               <li>{{loop.index}}번 째 {{item}}</li>
+            {% endfor %}
+    </ul>
+
+    <br><br>
+    <!-- 조건문 -->
+    {% set isLogged = true %}
+    {% if isLogged %}
+       <h3>로그인 되었읍니다.</h3>
+    {% else %}
+       <h3>로그인이 필요하므니다.</h3>
+    {% endif %}
+
+    {% set fruit = '' %}
+    {% if fruit === 'apple' %}
+       <h3>사과이므니다.</h3>
+    {% elif fruit === 'banana' %}
+       <h3>바나나이므니다.</h3>
+    {% elif fruit === 'orange' %}
+       <h3>오렌지이므니다.</h3>   
+    {% else %}
+       <h3>아무것도 아니므니다.</h3>
+    {% endif %}
+</body>
+</html>
