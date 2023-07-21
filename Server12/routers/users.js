@@ -76,5 +76,16 @@ module.exports = router;
 //            },
 // });
 
+// 5. Select id, name from users order by age desc;
+//   User.findAll({
+//    attributes:['id','name;'],
+//           order:[['age', 'desc']]          
+// });
+
+// select id, name from users order by age desc, id asc;
+//   User.findAll({
+//    attributes:['id','name'],
+//             order:[['age', 'desc'], ['id','asc']],       
+// });
 
 

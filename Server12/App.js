@@ -24,9 +24,12 @@ sequelize.sync({force:false})
 // 라우터들을 수집(require)합니다
 const indexRouter = require('./routers');
 const userRouter = require('./routers/users');
+const commentsRouter = require('./routers/comments');
+
 
 app.use('/', indexRouter);
 app.use('/users',userRouter);
+app.use('/comments',commentsRouter);
 
 // app.post('/users/insert', (req,res)=>{});
 

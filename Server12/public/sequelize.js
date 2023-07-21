@@ -61,3 +61,68 @@ async function getUser(){
         console.log(err);
     }
 };
+
+
+
+document.getElementById('comment-form').addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const id = e.target.userid.value;
+    const comment = e.target.comment.value;
+
+    if(!id){return alert('아이디를 입력하세요')};
+    if(!comment){return alert('댓글을 입력하세요')};
+        
+    try{
+         await axios.post('/comments/insert',{id, comment});
+    }catch(err){
+      console.error(err);
+    }
+    e.target.userid.value = '';
+    e.target.comment.value = '';
+});    
+
+
+
+async function getComments(){
+    try{
+         const res = await axios.get('/comments');
+         const comments = result.data;
+         const tbody = document.querySelector('#comment-list-tbody');
+         tbody.innerHTML = '';
+
+         comments.map(
+            (comment)=>{
+              const row = document.createElement('tr');
+
+              let td = document.createElement('td');
+              td.textContent = comment.id; // 댓글 번호
+              row.appendChild(td);
+
+              td = document.createElement('td');  
+              td.textContent = comment.User.name;  
+              // td.textContent = comment.commenter
+              row.appendChild(td); 
+
+              td = document.createElement('td');  
+              td.textContent = comment.comment;
+              row.appendChild(td); 
+
+              // 수정-삭제 버튼
+              const edit = document.createElement('button');
+              edit.textContent = '수정';
+              const remove = document.createElement('button');
+              remove.textContent = '삭제';
+              td = document.createElement('td');   // td 생성
+              td.appendChild(edit);   // 버튼을 td에 추가
+              row.appendChild(td);     // 버튼이 든 td에
+              td = document.createElement('td');
+              td.appendChild(remove);
+              row.appendChild(td);
+
+              tbody.appendChild(row);
+         }
+        );
+    }catch(err){
+        console.error(err);
+    }
+}
