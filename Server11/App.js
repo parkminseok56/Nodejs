@@ -23,4 +23,16 @@ app.get('/',(req,res)=>{
     // 스프링에서의 request.setAttribute, model.addAttribute, mav.addObject이랑 비슷한 기능임.
 });
 
+app.get('/include',(req,res)=>{
+    res.render( 'main', {titel:'Express'});
+});
+
+
+app.get('/extends',(req,res)=>{
+    res.render( 'extends', {titel:'Express'});
+});
+
+
+
+
 app.listen(app.get('port'),()=>{console.log(app.get('port'),' 포트에서 서버 대기 중');});
