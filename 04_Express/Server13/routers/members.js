@@ -51,6 +51,46 @@ router.post('/insertMember', async (req,res,next)=>{
   
 });
 
+router.get('/updateForm/:userid', async(req,res,next)=>{
+  try{
+        const member = await Member.findOne(
+          {
+            where:{userid:req.params.userid},
+          }
+        );
+        res.render('memberUpdateForm',{member});
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+});
 
+router.post('/update',async(req,res,next)=>{
+   try{
+       const result = await Member.update(
+        {
+          // 수정 내용
+          pwd : req.body.pwd,
+          name : req.body.name,
+          phone : req.body.phone,
+          email : req.body.email,
+        },
+        {
+          // 수정 레코드 검색 조건
+          where: { userid : req.body.userid},
+        }
+       );
+       // 수정된 회원을 다시 검색 후 저장
+       const member = await Member.findOne({
+        where:{userid : req.body.userid},
+       });
+       // 저장된 값으로 세션 값 갱신
+       req.session.loginUser = member;
+       res.json(member);
+   }catch(err){
+    console.error(err);
+    next(err);
+   }
+});
 
 module.exports = router;
