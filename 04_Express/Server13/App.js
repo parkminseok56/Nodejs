@@ -27,6 +27,7 @@ app.use('/boards', boardsRouter);
 
 // 데이터베이스에 대한 설정
 const {sequelize} = require('./models');
+
 sequelize.sync({force:false})
 .then(()=>{ console.log('데이터베이스 연결성공');})
 .catch((err)=>{console.error(err);})
@@ -37,7 +38,7 @@ sequelize.sync({force:false})
 // });
 
 //서버 운영중 라우팅 또는 그 외 에러가 발생하면 이동하여 처리될 에러처리 라우터
-/*app.use((req, res, next) => {
+app.use((req, res, next) => {
     const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
     error.status = 404;
     next(error);
@@ -48,6 +49,6 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error');  
 });
-*/
+
 app.listen(app.get('port'), () => {console.log(app.get('port'), '번 포트에서 대기 중');});
 

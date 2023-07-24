@@ -15,7 +15,7 @@ module.exports = class Board extends Sequelize.Model{
                         },
                created_at:{type:Sequelize.DATE,
                            allowNull:true,
-                           defaultValue:Sequelize.NOW,},
+                           defaultValue:Sequelize.fn('NOW'),},
                filename:{type:Sequelize.STRING(100),
                          allowNull:true,},
                realfilename:{type:Sequelize.STRING(100),
