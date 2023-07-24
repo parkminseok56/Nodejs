@@ -32,7 +32,7 @@ module.exports = class Member extends Sequelize.Model{
                 created_at:{
                     type:Sequelize.DATE,
                     allowNull:false,
-                    defaultValue:Sequelize.NOW,
+                    defaultValue:Sequelize.fn('NOW'),
                 }
             },
             {

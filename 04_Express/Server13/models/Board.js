@@ -3,7 +3,7 @@ module.exports = class Board extends Sequelize.Model{
     static init(sequelize){
         return super.init(
             {
-               subjext:{  type:Sequelize.STRING(100),
+               subject:{  type:Sequelize.STRING(100),
                           allowNull:false,},
                content:{  type:Sequelize.STRING(1000),
                           allowNull:false,

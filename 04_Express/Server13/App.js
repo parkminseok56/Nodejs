@@ -7,8 +7,13 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname,'public'))); // 스태틱 폴더 설정
+
+const dateFilter = require('nunjucks-date-filter');
+//넌적스에서 사용할 날짜 양식 필더 사용를 위한 모듈
 app.set('view engine', 'html'); // 넌적스 파일 확장자
 let env = nunjucks.configure('views',{express: app, watch:true}); //넌적스 설정
+env.addFilter('date',dateFilter);
+
 app.use(cookieParser());
 app.use(session({resave:false, saveUninitialized:false,secret:"rkdgmlwns", }));
 app.use(express.json()); //json 데이터 사용 설정

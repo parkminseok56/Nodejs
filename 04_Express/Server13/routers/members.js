@@ -18,4 +18,39 @@ router.post('/login',async (req,res,next)=>{
        next(err);
    } 
 });
+
+
+router.get('/logout', (req,res,next)=>{
+  req.session.destroy(function(){
+    req.session;
+  });
+  res.redirect('/');
+ });
+ 
+ router.get('/joinform', (req,res,next)=>{
+   res.render('memberInsert',{});
+});
+
+router.post('/insertMember', async (req,res,next)=>{
+  try{
+     const member = await Member.create(
+      {
+        userid:req.body.userid,
+        name:req.body.name,
+        pwd:req.body.pwd,
+        phone:req.body.phone,
+        email:req.body.email,
+      }
+     );
+     // res.json(member);
+     res.end();
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+  
+});
+
+
+
 module.exports = router;
