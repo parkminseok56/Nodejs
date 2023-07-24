@@ -85,6 +85,7 @@ async function getComments(){
     try{
         const result = await axios.get('/comments');
         const comments = result.data;
+
         const tbody = document.querySelector('#comment-list tbody');
         tbody.innerHTML = '';
         console.log(comments);
@@ -123,6 +124,14 @@ async function getComments(){
                 });
                 const remove = document.createElement('button');
                 remove.textContent = '삭제';
+                remove.addEventListener('click',async(e)=>{
+                    try{
+                        await axios.delete(`/comments/update/${comment.id}`);
+                    }catch(err){
+                        console.error(err);
+                    }
+                });
+            
                 
                 td = document.createElement('td');  // td 생성
                 td.appendChild(edit);  // 버튼을 td 에 추가
@@ -130,7 +139,13 @@ async function getComments(){
                 td = document.createElement('td');
                 td.appendChild(remove);
                 row.appendChild(td);
-
+                  
+                row.addEventListener('click', ()=>{
+                    // 현재 사용자의 아이디로 comment 테이블을 검색
+                    // 그 결과를 comment-list 테이블에 다시 출력(수정-삭제 버튼 포함)
+                    getCommentByid(user.id);
+                    // 현재 행의 사용자 id를 전달인수로 전달
+                });
                 tbody.appendChild(row);
             }
         );
@@ -138,3 +153,6 @@ async function getComments(){
         console.error(err);
     }
 }
+
+
+

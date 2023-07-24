@@ -66,7 +66,30 @@ router.patch('/update/:id', async (req, res)=>{
 //     where : {id:2},
 // });
 
+router.delete('/delete/:id', async(req,res)=>{
+    try{
+             const result = await Comment.destroy({
+                where : {id:req.params,id,},
+            });
+             res.json(result);  
+    }catch(err){
+        console.error(err);
+        next(err);
+    }
+});
 
-
-
+router.get('/search/:id',async (req,res,next)=>{
+    try{
+        const comments = await Comment.findAll(
+            {
+                include:{ model:User},
+                where:{commenter:req.params.id},
+            },
+        );
+        res.json( comments);
+    }catch(err){
+        console.error(err);
+        next(err);
+    }
+});
 module.exports = router;
