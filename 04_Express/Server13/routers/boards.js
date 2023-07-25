@@ -1,5 +1,6 @@
 const express = require('express')
 const Board = require('../models/Board');
+const Reply = require('../models/Reply'); // Reply 모델 추가
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
@@ -113,7 +114,7 @@ router.post('/writeBoard',uploadObj.single('image') , async (req,res,next)=>{
               board = await Board.create(
                 {
                     subject : req.body.subject,
-                    writer: req.body.writer,
+                    MemberUserid : req.body.writer,
                     content: req.body.text,
                     filename:req.file.originalname,  // 전송될 파일 이름
                     realfilename:req.file.filename,  // 서버에 저장된 파일 이름
@@ -123,7 +124,7 @@ router.post('/writeBoard',uploadObj.single('image') , async (req,res,next)=>{
               board = await Board.create(
                 {
                     subject : req.body.subject,
-                    writer: req.body.writer,
+                    MemberUserid: req.body.writer,
                     content: req.body.text,
                 }
 
@@ -138,12 +139,33 @@ router.post('/writeBoard',uploadObj.single('image') , async (req,res,next)=>{
 
 
 router.get('/replyList/:boardnum', async(req,res,next)=>{
-
+    try {
+        const result = await Reply.findAll(
+            {
+                where:{boardnum:req.params.boardnum},
+                order:[['id','DESC']],
+            }
+        );
+        res.json( result);
+     } catch (err) {
+        console.error(err);
+        next(err);
+     }
 });
 
 
 router.get('/replycnt/:boardnum', async(req,res,next)=>{
-
+     try {
+        const result = await Reply.findAll(
+            {
+                where:{boardnum:req.params.boardnum}
+            }
+        );
+        res.json( {cnt:result.length});
+     } catch (err) {
+        console.error(err);
+        next(err);
+     }
 });
 
 module.exports = router;

@@ -1,6 +1,3 @@
-const router = require("../routers");
-
-
 // boardWrite.js
 document.getElementById("write-form").addEventListener("submit",async(e)=>{
    e.preventDefault();
