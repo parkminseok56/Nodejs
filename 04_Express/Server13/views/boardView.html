@@ -61,8 +61,7 @@
                     </tr>
                     <tr>
                         <td align="center">{{dt | date("MM/DD HH:mm")}}</td>
-                        <td align="center">{{loginUser.userid}}<input type="hidden" id="writer" value="{{login.userid}}">
-                             <input type="hidden" id="boardnum" value="{{board.id}}">
+                        <td align="center">{{loginUser.userid}}<input type="hidden" id="writer" value="{{login.userid}}"><input type="hidden" id="boardnum" value="{{board.id}}">
                             </td>
                         <td>&nbsp;<input type="text" size="50" id="reply"></td>
                         <td align="center"><input type="submit" value="작성"></td>
@@ -115,6 +114,9 @@
                     remove1.value = '삭제'
                     td.document.createElement('td');
                     td.id = 'remove';
+
+                    remove1.addEventListener()
+
                     if( reply.writer == loginUserId){ td.appendChild(remove1);}
                     else{ td.innerHTML='&nbsp;';}
                     row.appendChild(td);
@@ -125,6 +127,23 @@
                 console.error(err);
             }
         }
+        document.getElementById('reply-list').addEventListener('submit',async(e)=>{
+           // form 에 있는 writer, boardnum, reply를 이용해서 댓글을 replys 테이블에 추가하고 ,
+           // getReplys 함수를 호출하시오.
+           e.preventDefault();
+           const writer = e.target.writer.value;
+           const boardnum = e.target.boardnum.value;
+           const reply = e.target.reply.value;
+           if(!reply){return alert('내용을 입력하세요');}
+           
+           try {
+            await axios.post('/boards/addReply',{writer,boardnum,reply});
+            getReplys(boardnum,writer);
+           }catch (err) {
+            console.log(err);
+           }
+           e.target.reply.value='';
+        });
     </script>
 </body>
 </html>

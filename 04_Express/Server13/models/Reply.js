@@ -27,6 +27,6 @@ module.exports = class Reply extends Sequelize.Model{
     static associate( db ){
           // 테이블간의 관계 설정
           db.Reply.belongsTo( db.Board,{ targetkey:'id' , foreignkey:'boardnum'});
-          db.Reply.belongsTo( db.Member,{ targetkey:'userid' , foreignkey:'writer'});
+          db.Reply.belongsTo( db.Member,{ targetkey:'userid' , foreignkey:'MemberUserid'});
     }
 }

@@ -4,6 +4,7 @@ const Reply = require('../models/Reply'); // Reply 모델 추가
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const { runInContext } = require('vm');
 
 
 const router = express.Router();
@@ -168,4 +169,18 @@ router.get('/replycnt/:boardnum', async(req,res,next)=>{
      }
 });
 
+router.post('/addReply', async(req,res,next)=>{
+   try {
+    await Reply.create(
+        {
+           writer : req.body.writer,
+           content : req.body.reply,
+           boardnum : req.body.boardnum,
+        }
+    );
+   }catch(err) {
+    console.error(err);
+    next(err);
+   }
+});
 module.exports = router;
