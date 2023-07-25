@@ -4,9 +4,12 @@ const nunjucks = require('nunjucks');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
+// 변수에 저장된 모듈들은 초기설정 등을 실행해서 사용 가능 상태로 설정함
 const app = express();
 app.set('port', process.env.PORT || 3000);
-app.use(express.static(path.join(__dirname,'public'))); // 스태틱 폴더 설정
+app.use('/',express.static(path.join(__dirname,'public'))); // 스태틱 폴더 설정
+// app.use('/up',express.static(path.join(__dirname,'upload'))); // 스태틱 폴더는 두 개 이상 만들 수 있음.
+// 그러려면 접근 경로를 서로 다르게 지정해줘야함. '/up'
 
 const dateFilter = require('nunjucks-date-filter');
 //넌적스에서 사용할 날짜 양식 필더 사용를 위한 모듈
