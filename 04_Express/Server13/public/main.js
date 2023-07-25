@@ -20,7 +20,7 @@ async function getBoard_list(){
             td = document.createElement('td');
             let tContent = board.subject;
 
-            // 해당 게시물의 댓글 갯수를 조회해서 제목 옆에 붙여넣을 예정
+            // 해당 게시물의 댓글 개수를 조회해서 제목 옆에 붙여넣을 예정
             try{
                 const result = await axios.get(`boards/replycnt/${ board.id }`);
                 const data = result.data;
@@ -33,6 +33,7 @@ async function getBoard_list(){
             }
 
             td.innerHTML = tContent;
+            // td.addEventListener(); 게시물 제목을 클릭하면 게시물 보기로 이동.
             row.appendChild(td);    // 게시물 제목
 
             td = document.createElement('td');
@@ -50,6 +51,10 @@ async function getBoard_list(){
             td.textContent = board.readCount;
             td.id = 'readCount';
             row.appendChild(td);    // 조회수
+
+            row.addEventListener('click',()=>{
+                location.href=`/boards/boardView/${board.id}`;
+            })
 
             tbody.appendChild(row); // 완성된 행을 tbody에 삽입
         });

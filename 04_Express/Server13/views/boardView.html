@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/board.css">
+    <style>
+        #time { text-align: center;}
+        #writer { text-align: center;}
+        #remove { text-align: center;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <h1 style="text-align: center;">게시글 내용</h1>
+        <table>
+            <tr>
+                <th width="150" align="center">번호</th>
+                <td  width="200" align="center">{{board.id}}<input type="hidden" id="boardnum" value="{{board.id}}"></td>
+                <th width="150" align="center">작성자</th>
+                <td width="200" align="center">{{board.writer}}</td>
+            </tr>
+            <tr>
+                <th align="center">작성일</th>
+                <td align="center">{{board.created_at | date("YYYY/MM/DD")}}</td>
+                <th align="center">조회수</th>
+                <td align="center">{{board.readCount}}</td>
+            </tr>
+            <tr>
+                <th align="center" width="150">제목</th>
+                <td colspan="3">&nbsp;{{board.subject}}</td>
+            </tr>
+            <tr height="300">
+                <th align="center" width="150">내용</th>
+                <td colspan="2" height="300" width="300"><pre>{{board.content}}</pre><br></td>
+                <td width="150" align="center">
+                    {% if board.filename %}
+                        <img src="/upload/{{board.realfilename}}" width="150" />
+                    {% endif %}
+                </td>
+            </tr>
+            <tr height="50">
+                <td colspan="4" align="center">
+                    <input type="button" value="수정" onclick="location.href='/boards/UpdateForm/{{board.id}}'"/>
+                    <input type="button" value="삭제" onclick="location.href='/boards/deleteBoard/{{board.id}}'"/>
+                    <input type="button" value="돌아가기" onClick="location.href='/boards'"/>    
+                </td>
+            </tr>
+        </table><br><br>
+    </div>
+</body>
+</html>
