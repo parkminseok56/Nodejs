@@ -10,6 +10,7 @@
         #writer { text-align: center;}
         #remove { text-align: center;}
     </style>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div id="wrap">
@@ -48,6 +49,50 @@
                 </td>
             </tr>
         </table><br><br>
+
+        <form id="reply-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="140" align="center">작성일시</th>
+                        <th width="900" align="center">작성자</th>
+                        <th width="400" align="center">내용</th>
+                        <th width="70" align="center">&nbsp;</th>
+                    </tr>
+                    <tr>
+                        <td align="center">{{dt | date("MM/DD HH:mm")}}</td>
+                        <td align="center">{{loginUser.userid}}
+                            <input type="hidden" id="writer" value="{{login.userid}}">
+                             <input type="hidden" id="boardnum" value="{{board.id}}">
+                            </td>
+                        <td>&nbsp;<input type="text" size="50" id="reply"></td>
+                        <td align="center"><input type="submit" value="작성"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td  >
+                        <td></td>
+                        <td></td>
+                   </tr>
+               </tbody>
+            </table>
+        </form>
     </div>
+    <script type="text/javascript">
+        getReplys('{{board.id}}','{{loginUser.userid}}');
+
+       async function getReplys( boardnum, loginUserId){
+            try {
+                // 현재 게시물의 댓글을 조회해서 tbody에 표시함.
+                const result = await axios.get(`/boards/replyList/${boardnum}`);
+                const replys = result.data;
+                
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    </script>
 </body>
 </html>

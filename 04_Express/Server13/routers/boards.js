@@ -103,7 +103,7 @@ router.get('/writeForm',(req,res,next)=>{
 });
 
 
-router.post('/writeBoard',0 , async (req,res,next)=>{
+router.post('/writeBoard',uploadObj.single('image') , async (req,res,next)=>{
     // uploadObj.single('image') : <input type="file" req.file.image 로 전송된 파일을 ,
     // 설정되어 있는 폴더(public/upload)에 설정되어 있는 파일이름(파일명12345678.확장자)로 업로드 해줌
     try{
@@ -136,5 +136,14 @@ router.post('/writeBoard',0 , async (req,res,next)=>{
     }
 });
 
+
+router.get('/replyList/:boardnum', async(req,res,next)=>{
+
+});
+
+
+router.get('/replycnt/:boardnum', async(req,res,next)=>{
+
+});
 
 module.exports = router;
