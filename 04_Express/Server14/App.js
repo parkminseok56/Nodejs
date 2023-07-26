@@ -35,6 +35,16 @@ app.use(session({  // 세션 사용
 //  그 값을 사용하는 클라이언트를 구분할 수 있는 쿠기가 자동으로 심어지는데,
 //  그 쿠기에 대한 설정임. 세션값이 삭제되거나 브라우저가 닫히면 쿠키값도 사라짐.
 
+const { sequelize } = require('./models');
+sequelize.sync({force:false})
+.then(()=>{
+    console.log('데이터 베이스 연결 성공');
+})
+.catch((err)=>{
+    console.error(err);
+});
+
+
 
 const pageRouter = require('./routers/page');
 const postRouter = require('./routers/post');

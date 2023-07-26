@@ -43,7 +43,12 @@ module.exports = class User extends Sequelize.Model{
          db.User.hasMany(db.Post);
          // hasMany와 belongsTo 사이에 targetKey, sourceKey, foreignKey 들을
          // 지정하지 않으면 hasMany의 주인공 테이블(User)의 기본키가 belongsTo 의 주인공테이블(Post)의 외래키로 삽입됨.
-         // 이 때 삽입되는 필드명은 user 테이브르이 id라는 뜻으로 Userid가 됨.
+         // 이 때 삽입되는 필드명은 user 테이블의 id라는 뜻으로 Userid가 됨.
+         db.User.belongsToMany(db.user,{foreignKey:'followingId',as:'Followers',through:'Follow'});
+         db.User.belongsToMany(db.user,{foreignKey:'followingId',as:'Followings',through:'Follow'});
+         // 테이블 이름 : Follow
+         // 필드명 : followingId, followerId
+         // User 테이블로부터 Follow 테이블에 접근할때는 Followers 와 Follwings로 접근함.
     }
 };
 
