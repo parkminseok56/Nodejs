@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/main.css">
+    <script src="https://unpkg.com/axios.dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-wrap">
+              <div class="profile">                
+                   <form id="login-form" action="/auth/login" method="post">
+                       <div class="input-group">
+                            <label id="email">이메일</label>
+                            <input type="text" id="email" name="email">
+                       </div> 
+                       <div class="input-group">
+                        <label id="password">비밀번호</label>
+                        <input type="password" id="password" name="password">
+                       </div> 
+                       <div>
+                         <a id="join"href="/join" class="btn">회원가입</a>
+                         <button id="login" type="submit" class="btn">로그인</button>
+                         <a id="join"href="/auth/kakao" class="btn">카카오톡</a>
+                       </div>
+                   </form>   
+              </div>
+        </div> 
+    </div>
+</body>
+</html>
