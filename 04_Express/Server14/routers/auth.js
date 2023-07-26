@@ -39,6 +39,6 @@ router.post('/join', async (req,res,next)=>{
         next(err)
     }
 });
-
+ 
 
 module.exports = router;

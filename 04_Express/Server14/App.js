@@ -51,9 +51,9 @@ const postRouter = require('./routers/post');
 const authRouter = require('./routers/auth');
 const userRouter = require('./routers/user');
 app.use('/',pageRouter);
-app.use('/',postRouter);
-app.use('/',authRouter);
-app.use('/',userRouter);
+app.use('/post',postRouter);
+app.use('/auth',authRouter);
+app.use('/user',userRouter);
 // app.get('/',(req,res)=>{
 //     res.send('<h1>의미없는 라우터</h1>')
 // })
