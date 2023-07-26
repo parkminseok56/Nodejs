@@ -10,7 +10,17 @@
         #writer { text-align: center;}
         #remove { text-align: center;}
     </style>
-     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        function deleteConfirm(boardid){
+            let a = confirm('정말로 삭제하시겠습니까?');
+            if(a){
+                location.href=`/boards/deleteBoard/${boardid}`;
+            }else{
+                return;
+            }
+        }
+    </script>
 </head>
 <body>
     <div id="wrap">
@@ -20,7 +30,7 @@
                 <th width="150" align="center">번호</th>
                 <td  width="200" align="center">{{board.id}}<input type="hidden" id="boardnum" value="{{board.id}}"></td>
                 <th width="150" align="center">작성자</th>
-                <td width="200" align="center">{{board.MemberUserid}}</td>
+                <td width="200" align="center">{{board.writer}}</td>
             </tr>
             <tr>
                 <th align="center">작성일</th>
@@ -43,8 +53,8 @@
             </tr>
             <tr height="50">
                 <td colspan="4" align="center">
-                    <input type="button" value="수정" onclick="location.href='/boards/UpdateForm/{{board.id}}'"/>
-                    <input type="button" value="삭제" onclick="location.href='/boards/deleteBoard/{{board.id}}'"/>
+                    <input type="button" value="수정" onclick="location.href='/boards/updateForm/{{board.id}}'"/>
+                    <input type="button" value="삭제" onclick="deleteConfirm('{{board.id}}');"/>
                     <input type="button" value="돌아가기" onClick="location.href='/boards'"/>    
                 </td>
             </tr>
@@ -55,94 +65,103 @@
                 <thead>
                     <tr>
                         <th width="140" align="center">작성일시</th>
-                        <th width="900" align="center">작성자</th>
+                        <th width="90" align="center">작성자</th>
                         <th width="400" align="center">내용</th>
                         <th width="70" align="center">&nbsp;</th>
                     </tr>
                     <tr>
                         <td align="center">{{dt | date("MM/DD HH:mm")}}</td>
-                        <td align="center">{{loginUser.userid}}<input type="hidden" id="writer" value="{{login.userid}}"><input type="hidden" id="boardnum" value="{{board.id}}">
-                            </td>
+                        <td align="center">{{loginUser.userid}}
+                            <input type="hidden" id="writer" value="{{loginUser.userid}}">
+                            <input type="hidden" id="boardnum" value="{{board.id}}"></td>
                         <td>&nbsp;<input type="text" size="50" id="reply"></td>
                         <td align="center"><input type="submit" value="작성"></td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td  >
-                        <td></td>
-                        <td></td>
-                   </tr>
-               </tbody>
+                <tbody><tr><td></td><td></td><td></td><td></td></tr></tbody>       
             </table>
         </form>
     </div>
     <script type="text/javascript">
-        getReplys('{{board.id}}','{{loginUser.userid}}');
+        getReplys('{{board.id}}' , '{{loginUser.userid}}');
 
-       async function getReplys( boardnum, loginUserId){
-            try {
-                // 현재 게시물의 댓글을 조회해서 tbody에 표시함.
+        async function getReplys( boardnum, loginUserId ){
+            try{
+                // 현재 게시물의 댓글을 조회해서 tbody에 표시합니다
                 const result = await axios.get(`/boards/replyList/${boardnum}`);
                 const replys = result.data;
-                
+
                 const tbody = document.querySelector('#reply-list tbody');
                 tbody.innerHTML='';
 
                 replys.map((reply)=>{
                     const row = document.createElement('tr');
 
+                    // 작성 일자
                     let td = document.createElement('td');
-                    td.textContent = reply.created_at.substring(5,7)+"/"+reply.created_at.substring(8,10)
-                    +":"+reply.created_at.substring(14,16);
+                    td.textContent = reply.created_at.substring(5,7)+"/"+reply.created_at.substring(8,10)+" "+reply.created_at.substring(11,13)+":"+reply.created_at.substring(14,16);
                     td.id = 'time';
-                    row.append(td);
+                    row.append( td );
                     // 작성자
+                    td = document.createElement('td');    
                     td.textContent = reply.writer;
-                    td.id = 'writer'
+                    td.id = 'writer';                     
                     row.appendChild(td);
                     // 작성 내용
-                    td = document.createElement('td');
-                    td.textContent = reply.content;
-                    td.id = 'content';
+                    td = document.createElement('td');     
+                    td.textContent = reply.content; 
+                    td.id = 'content';                     
                     row.appendChild(td);
 
                     // 삭제버튼
-                    const remove1 = document.createElement("input");
-                    remove1.setAttribute('type','button');
-                    remove1.value = '삭제'
-                    td.document.createElement('td');
-                    td.id = 'remove';
+                    const remove1 = document.createElement('input');
+                    remove1.setAttribute('type', 'button');   
+                    remove1.value = '삭제';
+                    td = document.createElement('td');     
+                    td.id='remove';
 
-                    remove1.addEventListener()
+                    remove1.addEventListener('click', async (e)=>{
+                        try{
+                            let ans = confirm('정말로 삭제할까요?');
+                            if(ans==true){
+                                await axios.delete( `/boards/deleteReply/${reply.id}`);
+                                getReplys(boardnum , loginUserId);
+                            }else{
+                                return;
+                            }
+                        }catch(err){
+                            console.error(err);
+                        }
+                    });
 
-                    if( reply.writer == loginUserId){ td.appendChild(remove1);}
-                    else{ td.innerHTML='&nbsp;';}
+                    if(  reply.writer == loginUserId  ){ td.appendChild(remove1); }
+                    else{ td.innerHTML='&nbsp;'; }           
                     row.appendChild(td);
 
-                    tbody.appendChild(row)
+                    tbody.appendChild(row); 
                 });
-            } catch (err) {
+
+
+            }catch(err){
                 console.error(err);
             }
         }
-        document.getElementById('reply-list').addEventListener('submit',async(e)=>{
-           // form 에 있는 writer, boardnum, reply를 이용해서 댓글을 replys 테이블에 추가하고 ,
-           // getReplys 함수를 호출하시오.
-           e.preventDefault();
-           const writer = e.target.writer.value;
-           const boardnum = e.target.boardnum.value;
-           const reply = e.target.reply.value;
-           if(!reply){return alert('내용을 입력하세요');}
-           
-           try {
-            await axios.post('/boards/addReply',{writer,boardnum,reply});
-            getReplys(boardnum,writer);
-           }catch (err) {
-            console.log(err);
-           }
-           e.target.reply.value='';
+
+        document.getElementById('reply-list').addEventListener('submit', async(e)=>{
+            // form 에 있는 writer, boardnum, reply 를 이용해서  댓글을 replys 테이블에 추가하고, getReplys함수를 호출하세요
+            e.preventDefault();
+            const writer = e.target.writer.value;
+            const boardnum = e.target.boardnum.value;
+            const reply = e.target.reply.value;
+            if(!reply){return alert('내용을 입력하세요');}
+
+            try{
+                await axios.post('/boards/addReply', {writer, boardnum, reply});
+                getReplys(boardnum, writer);
+            }catch(err){
+                console.log(err);
+            }
+            e.target.reply.value='';
         });
     </script>
 </body>

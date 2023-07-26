@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="/board.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -12,11 +11,11 @@
         <form id="join-form">
             <fieldset>
                 <legend>회원가입 - 사용자 등록</legend>
-                <div><input type="text" name="userid" placeholder="userid"> </div>
-                <div><input type="password" name="pwd" placeholder="password"> </div>
-                <div><input type="text" name="name" placeholder="name"> </div>
-                <div><input type="text" name="phone" placeholder="phone"> </div>
-                <div><input type="text" name="email" placeholder="email"> </div>
+                <div><input id="userid" type="text" placeholder="userid"></div>
+                <div><input id="pwd" type="password" placeholder="password"></div>
+                <div><input id="name" type="text" placeholder="name"></div>
+                <div><input id="phone" type="text" placeholder="phone"></div>
+                <div><input id="email" type="text" placeholder="email"></div>
                 <button type="submit">등록완료</button>
             </fieldset>
         </form>
