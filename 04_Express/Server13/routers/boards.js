@@ -6,9 +6,33 @@ const fs = require('fs');
 const path = require('path');
 //------------------------------------------------------------------
 const { inLogginedIn, isNotLoggedIn, isLoggedIn } = require('./middleware');
-
 // 페이징 설정
-
+const paging = {
+    page: 1,
+    totalCount: 0,
+    beginPage: 0,
+    endPage: 0,
+    disPlayRow: 10,
+    disPlayPage: 10,
+    prev: false,
+    next: false,
+    startNum: 0,
+    endNum: 0,
+    pagingCal:function(){
+        this.endPage = Math.ceil(this.page / this.disPlayPage) * this.disPlayPage;
+        this.beginPage = this.endPage - (this.disPlayPage -1);
+        let totalPage = Math.ceil( this.totalCount / this.disPlayRow);
+        if(totalPage<this.endPage){
+            this.endPage = totalPage;
+            this.next = false;
+        }else{
+            this.next = true;
+        }
+        this.prev = (paging.beginPage == 1) ? false : true
+        this.startNum = (paging.page - 1) * paging.disPlayRow + 1
+        this.endNum = paging.page * paging.disPlayRow
+    }
+}
 //------------------------------------------------------------------
 
 
@@ -76,63 +100,49 @@ router.get('/', isLoggedIn, (req, res) => { //isLoggedIn가 실행되었다가 n
 // });
 
 // 페이징 적용
-router.get('/boardList', async (req, res, next) => {
-    const paging = {
-        page: 1,              // 현재 페이지
-        displayPage: 10,      // 표시할 페이지 수
-        displayRow: 10,       // 한 페이지에 표시할 게시물 수
-        totalCount: 0,        // 총 게시물 수
-        beginPage: 0,         // 시작 페이지
-        endPage: 0,           // 끝 페이지
-        startNum: 0,          // 페이지 시작 레코드 위치
-        endNum: 0,            // 페이지 끝 레코드 위치
-        prev: false,          // 이전 페이지 존재 여부
-        next: false           // 다음 페이지 존재 여부
-      };
-      
+router.get('/boardList/:page', async (req, res, next) => {
     console.log("page : ", req.params.page);
-    // 전달된 페이지가 있다면 현재 페이지로, 그렇지 않다면 현재 페이지1
     if (req.params.page == undefined) {
         paging.page = 1;
     } else {
         paging.page = req.params.page;
     }
 
-    // 게시물 개수 조회
+    // 게시물 갯수 조회
     let count = 0;
     try {
-        const result = await Board.findAll();
+        const result = await Board.findAll({
+        })
         count = result.length;
     } catch (err) {
         console.error(err);
-        next(err);
     }
     paging.totalCount = count;
-    // paging 함수가 하던 일 -----------------------------------------
-    paging.endPage = (Math.ceil(paging.page / paging.displayPage)) * paging.diplayPage;
-    paging.beginPage = paging.endPage - (paging.displayPage -1);
-    let totalPage = Math.ceil( paging.totalCount / paging.displayRow);
-    if(totalPage<paging.endPage){
-        paging.endPage = totalPage;
-        paging.next = false;
-    }else{
-        paging.next =  true;
+    // paging 함수
+    paging.endPage = (Math.ceil(paging.page / paging.disPlayPage)) * paging.disPlayPage;
+    paging.beginPage = paging.endPage - (paging.disPlayPage - 1)
+    let totalPage = Math.ceil(paging.totalCount / paging.disPlayRow)
+    if (totalPage < paging.endPage) {
+        paging.endPage = totalPage
+        paging.next = false
+    } else {
+        paging.enxt = true
     }
-    paging.prev = (paging.beginPage==1) ? false : true;
-    paging.startNum = (paging.page-1) * paging.displayRow+1;
-    paging.endNum = paging.page * paging.displayRow;
-    //----------------------------------------------------------------
-    console.log(paging.beginPage,paging.endPage,paging.startNum,paging.endNum,paging.page);
-    try {
-        const boardList = await Board.findAll(
-            {  
-                offset:paging.startNum, // 조회하고자 하는 게시물의 시작 레코드 위치
-                limit: paging.endNum - paging.startNum, // 조회할 레코드의 개수
-                order:[['id','DESC']],   // 게시물 번호로 내림차순 정렬
-            }  
-        );
-        res.json(boardList,paging); // res.json({boardList:boardList,paging:paging} );
 
+    paging.prev = (paging.beginPage == 1) ? false : true
+    paging.startNum = (paging.page - 1) * paging.disPlayRow + 1
+    paging.endNum = paging.page * paging.disPlayRow
+
+    console.log(paging.beginPage, paging.endPage, paging.prev, paging.next, paging.startNum, paging.endNum);
+
+    try {
+        const boardList = await Board.findAll({
+
+            offset: paging.startNum, // 조회하고자하는 게시물의 시작 위치
+            limit: paging.endNum - paging.startNum, // 조회할 레코드의 갯수
+            order: [['id', 'desc']] // 게시물 번호로 내림차순 정렬
+        });
+        res.json({boardList, paging});
     } catch (err) {
         console.error(err);
         next(err);

@@ -4,7 +4,7 @@ getBoard_list();
 async function getBoard_list(page) {
     if (page == undefined) { page = 1; }
     try {
-        const result = await axios.get('/boards/boardList');
+        const result = await axios.get(`/boards/boardList/${page}`);
         const boards = result.data.boardList;
         const paging = result.data.paging;
 
@@ -58,15 +58,25 @@ async function getBoard_list(page) {
 
         const pageArea = document.querySelector('#page');
         pageArea.innerHTML = '';
-
-        for (let i = paging.beginPage; i <= paging.endPage; i++) {
-            if(paging.page == i){
-                pageArea.innerHTML += `<span style="color:red;">&nbsp;&nbsp;${i}</span>`;
-            }else{
-                pageArea.innerHTML += `<a href="#" onClick="getBoard_list('${i}')">&nbsp;&nbsp; ${i} </a>`;
-            }
+        
+        // Previous button
+        if (paging.prev) {
+          pageArea.innerHTML += `<a href="#" onClick="getBoard_list('${paging.beginpage - 1}')">&nbsp;&nbsp;◀</a>`
         }
-
+        
+        for (let i = paging.beginPage; i <= paging.endPage; i++) {
+          if (paging.page == i) {
+            pageArea.innerHTML += `<span style="color:red;">&nbsp;&nbsp;${i}</span>`;
+          } else {
+            pageArea.innerHTML += `<a href="#" onClick="getBoard_list('${i}')">&nbsp;&nbsp;${i}</a>`;
+          }
+        }
+        
+        // Next button
+        if (paging.next) {
+          pageArea.innerHTML += `<a href="#" onClick="getBoard_list('${paging.endpage + 1}')">&nbsp;&nbsp;▶</a>`
+        }
+        
     } catch (err) {
         console.error(err);
     }
