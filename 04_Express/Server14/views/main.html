@@ -1,11 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'layout.html' %}
+<!-- 양식 파일(layout.html)이 현재 페이지로 와서 위치하며, 아래 기술되는 block content와 
+      block script가 layout.html의 내용 중 해당 위치에 삽입됨.-->
+
+{% block content %}
+    <div class="timeline">
+     <!-- 피드 작성 폼-- 로그인 후에 노출> -->
+     <!-- 해시 태그로 검색할 수 있는 검색 폼 -->
+         <div class="twits">
+            <form id="hastag-form" action="/hashtag">
+                <input type="text" name="hashtag" placeholder="태그 검색">
+                <button class="btn">검색</button>
+            </form>
+            <br />
+         </div>
+     <!-- 각 피드들이 나열 - 피드가 하나라도 작성되면 노출-->
+    </div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript"></script>
+{% endblock %}

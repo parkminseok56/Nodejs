@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +8,35 @@
     <link rel="stylesheet" href="/main.css">
     <script src="https://unpkg.com/axios.dist/axios.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="profile-wrap">
-              <div class="profile">                
-                   <form id="login-form" action="/auth/login" method="post">
-                       <div class="input-group">
-                            <label id="email">이메일</label>
-                            <input type="text" id="email" name="email">
-                       </div> 
-                       <div class="input-group">
+            <div class="profile">
+                <form id="login-form" action="/auth/login" method="post">
+                    <div class="input-group">
+                        <label id="email">이메일</label>
+                        <input type="text" id="email" name="email">
+                    </div>
+                    <div class="input-group">
                         <label id="password">비밀번호</label>
                         <input type="password" id="password" name="password">
-                       </div> 
-                       <div>
-                         <a id="join"href="/join" class="btn">회원가입</a>
-                         <button id="login" type="submit" class="btn">로그인</button>
-                         <a id="join"href="/auth/kakao" class="btn">카카오톡</a>
-                       </div>
-                   </form>   
-              </div>
-        </div> 
+                    </div>
+                    <div>
+                        <a id="join" href="/join" class="btn">회원가입</a>
+                        <button id="login" type="submit" class="btn">로그인</button>
+                        <a id="join" href="/auth/kakao" class="btn">카카오톡</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {%block content%}
+        {%endblock%}
     </div>
+    {%block script%}
+    {%endblock%}
 </body>
+
 </html>
+<!--layout.html은 모든 페이지에 적용될 양식 페이지임. 각 페이지의 내용을 담고 있는 각 html 파일들은 
+    block content와 block script에 들어갈 내용만 쓰고, 각 layout.html 파일을 extend함.-->
