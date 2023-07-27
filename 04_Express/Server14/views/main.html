@@ -54,7 +54,7 @@
                        const res = await axios.post('/post/img',formData);
                         document.getElementById('img-url').value = res.data.url; 
                         // 히든 태그에 url 대입
-                        document.getElementById('img-preciew').src = res.data.url; 
+                        document.getElementById('img-preview').src = res.data.url; 
                         // 미리보기 태그에 url 대입
                         document.getElementById('img-preview').style.display = 'inline'; 
                         // 미리보기 창 보이기
