@@ -1,7 +1,7 @@
 const passport = require('passport');
 const local = require('./localStrategy');
 const User = require('../models/User');
-//const kakao = require('./kakaoStrategy');
+const kakao = require('./kakaoStrategy');
 
 module.exports = ()=>{ 
     passport.serializeUser( (user, done)=>{    // 정상 로그인이 되었을때 호출
@@ -24,5 +24,6 @@ module.exports = ()=>{
     });
 
     local();
+    kakao();
 };
 
