@@ -48,7 +48,7 @@ router.post('/', uploadObj2.none(), async (req, res, next) => {
     // 3. 해시태그 하나 씩 hashtags 테이블에서 검색해서, 이미 없으면 지나가고, 없으면 자동 생성 id와 함께
     // hashtags 테이블에 저장
     if (hashtags) { // 추출한 해시태그가 하나 이상 있다면..,
-      const result = Promis.all(
+      const result = Promise.all(
         hashtags.map((tag) => {
           // tag에 담긴 단어가 hashtags 테이블에 있으면 그냥 리턴, 없으면 추가하고 리턴.  
           return Hashtag.findOrCreate(
