@@ -1,42 +1,67 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/main.css">
-    <script src="https://unpkg.com/axios.dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
-
 <body>
     <div class="container">
         <div class="profile-wrap">
             <div class="profile">
-                <form id="login-form" action="/auth/login" method="post">
-                    <div class="input-group">
-                        <label id="email">이메일</label>
-                        <input type="text" id="email" name="email">
+                {% if user %}
+                    <div class="user-name">{{'안녕하세요 '+user.nick+'님'}}</div>
+                    <div class="half"><div>팔로워</div>
+                        <div class="count follower-count">0</div> 
                     </div>
-                    <div class="input-group">
-                        <label id="password">비밀번호</label>
-                        <input type="password" id="password" name="password">
+                    <div class="half"><div>필로잉</div>
+                        <div class="count following-count">0</div> 
                     </div>
-                    <div>
+                    <input type="hidden" id="my-id" value="{{user.id}}">
+                    <a id="my-profile" href="/profile" class="btn">내 프로필</a>
+                    <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+                {% else %}
+                    <!-- 로그인 후에 표시되는 사용자정보 - 로그인후에 노출 -->
+                    <form id="login-form" action="/auth/login" method="post">
+                        <div class="input-group">
+                            <label id="email">이메일</label>
+                            <input type="text" id="email" name="email" >
+                        </div>
+                        <div class="input-group">
+                            <label for="password">비밀번호</label>
+                            <input id="password" type="password" name="password" >
+                        </div>
                         <a id="join" href="/join" class="btn">회원가입</a>
                         <button id="login" type="submit" class="btn">로그인</button>
-                        <a id="join" href="/auth/kakao" class="btn">카카오톡</a>
-                    </div>
-                </form>
+                        <a id="kakao" href="/auth/kakao" class="btn">카카오톡</a>
+                    </form>
+                {% endif %}
             </div>
         </div>
-        {%block content%}
-        {%endblock%}
+        {% block content %}
+        {% endblock %}
+        
+        <script type="text/javascript">
+            window.onLoad=()=>{
+               // localhost:3000/?loginError = 비번이 일치 하지 않습니다.
+               // 현재 페이지로 이동하는 url에서 loginErrorv 파라미터가 있는 확인 후 경고 창 실행.
+               if (new URL(location.href).searchParams.get('loginError')){
+                  alert('{{loginError}}');
+                  location.href='/';
+               }
+            };
+        </script>
     </div>
-    {%block script%}
-    {%endblock%}
+    {% block script %}
+    {% endblock %}
 </body>
-
 </html>
-<!--layout.html은 모든 페이지에 적용될 양식 페이지임. 각 페이지의 내용을 담고 있는 각 html 파일들은 
-    block content와 block script에 들어갈 내용만 쓰고, 각 layout.html 파일을 extend함.-->
+<!-- 
+    layout.html 은 모든페이지에 적용될  양식 페이지입니다.  
+    각페이지의 내용을 담고 있는 각 html 파일들은  block content 와 block script 에 들어갈 내용만 쓰고,   layout.html 파일을 extend 합니다
+-->
+
+

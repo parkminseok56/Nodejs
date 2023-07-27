@@ -46,7 +46,7 @@ sequelize.sync({force:false})
 });
 
 const passportConfig = require('./passport');
-passportConfig();
+passportConfig(); 
 
 // passport 모듈의 생성은 세션과 연관이 있으므로 그 뒤에 미들웨어를 설정함.
 app.use(passport.initialize());
