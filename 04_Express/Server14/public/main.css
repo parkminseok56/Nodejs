@@ -193,6 +193,12 @@ textarea {
     width: 96%;
 }
 
+#write-form {
+    padding: 10px;
+    background: chocolate;
+    border-radius: 4px;
+}
+
 #hashtag-form {
     text-align: right;
     width: 96%;

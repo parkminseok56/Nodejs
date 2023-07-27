@@ -4,6 +4,24 @@
 
 {% block content %}
     <div class="timeline">
+          {% if user %}
+          <div>
+             <form id="post-form" action="/post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <textarea id="twit" name="content" maxlength="140"></textarea>
+                </div>
+                <div class="img-preview">
+                    <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
+                    <input id="img-url" type="hidden" name="url">
+                </div>
+                <div>
+                    <label id="img-label" for="img">사진 업로드</label>
+                    <input id="img" type="file" accept="image/*">
+                    <button id="post-btn" type="submit" class="btn">포스팅</button>
+                </div>
+             </form>
+          </div>
+          {% endif%}
         <!-- 피드 작성 폼 - 로그인 후에 노출 -->
         <!-- 해시테그로 검색할 수 있는 검색 폼 -->
         <div class="twits">
@@ -18,7 +36,7 @@
 {% endblock %}
 
  {% block script %}
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
             function log(){
                 // location:3000/?loginError= 비번이 일치하지 않습니다.
                 // 현재 페이지로 이동하는 url에서 loginError 파라미터가 있는지 확인 후 경고창 실행
@@ -28,5 +46,22 @@
                     location.href='/'
                 }
             };
-    </script> -->
+            
+            document.getElementById('img').addEventListener('change',async(e)=>{
+                    const formData = new FormData();
+                    formData.append( 'img',e.target.files[0]);
+                    try {
+                       const res = await axios.post('/post/img',formData);
+                        document.getElementById('img-url').value = res.data.url; 
+                        // 히든 태그에 url 대입
+                        document.getElementById('img-preciew').src = res.data.url; 
+                        // 미리보기 태그에 url 대입
+                        document.getElementById('img-preview').style.display = 'inline'; 
+                        // 미리보기 창 보이기
+                    } catch (err) {
+                        console.error(err);
+                    }
+                        
+            });
+    </script> 
 {% endblock %} 
