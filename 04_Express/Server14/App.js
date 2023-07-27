@@ -9,6 +9,7 @@ const passport = require('passport');
 const dateFilter = require('nunjucks-date-filter');
 
 
+
 const app = express();  // 서버 객체
 app.set('port', process.env.PORT || 3000);  // 포트변수 설정
 dotenv.config();  // .env 파일 사용 설정
@@ -44,6 +45,12 @@ sequelize.sync({force:false})
     console.error(err);
 });
 
+const passportConfig = require('./passport');
+passportConfig();
+
+// passport 모듈의 생성은 세션과 연관이 있으므로 그 뒤에 미들웨어를 설정함.
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 const pageRouter = require('./routers/page');

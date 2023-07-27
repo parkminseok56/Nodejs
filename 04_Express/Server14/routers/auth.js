@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -40,5 +41,39 @@ router.post('/join', async (req,res,next)=>{
     }
 });
  
+router.post('./login',(req,res,next)=>{
+       // passport 모듈로 로그인을 구현함.
+       // 'local' : 일반 로그인을 하려고 보내느 전달인수
+       // (authErr,user, info)=>{} : 그 때 보내서 실행할 전달인수로서의 익명함수
+       // authErr,user, info : authenticate 함수가 실행되면서 그 안에서 잔달된 함수를 호출할텐데 그 때, 
+       //   넣어준 값을 받을 매개변수들
+       passport.authenticate( 
+        'local', 
+        (authErr,user, info)=>{
+            // 로그인이 성공하면 user에는 현재 로그인 한 사람의 정보가 담김
+            // 로그인 중 서버 에러가 있다면 서버에러로 처리
+            // 이 떄 authenErr 에러의 내용이 전달 됨.
+        if (authError){
+            console.error(authError);
+            return next(authError);
+        }
+        // 로그인하려는 이메일의 주인공이 사용자 목록에 없을때
+        if(!user){ // user가 null or undefined 라면
+            return res.redirect(`/?loginError=${info.message}`);
+            // '/' 첫 페이지로 이동하는 url
+            // loginError=${info.message} 파라미터 같이 전달
+        }
+        // 여기서부터 정상 로그인 (세션에 사용자 정보를 넣고 첫 페이지로 이동)
+        return req.login(user,(loginError)=>{
+            if(loginError){   // index.js에서 보낸 에러가 있다면 에러 처리.
+                console.error(loginError);
+                return next(loginError);
+            }
+            // 현재 위치에서 세션 쿠키가 브라우져로 보내어짐.
+            return res.redirect('/');
+        });
+    }
+    )(req,req,next); // 미들웨어 내의 미들웨어에는 뒤에 (req,req,next)를 붙임.
+});
 
 module.exports = router;
