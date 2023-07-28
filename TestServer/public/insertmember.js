@@ -13,3 +13,5 @@ document.getElementById("join-form").addEventListener('submit', async (e)=>{
         location.href = '/login.html';
     }catch(err){ console.error(err);  }
 });
+
+

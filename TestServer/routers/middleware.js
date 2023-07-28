@@ -11,13 +11,3 @@ exports.isLoggedIn = (req,res,next)=>{
 };
 
 
-exports.isNotLoggedIn = (req, res, next) => {
-    if (req.session.loginUser != undefined) {
-        //로그인이 안된 상태라면
-      next();
-    } else {
-        // 로그인이 되어있는 상태라면
-        res.status(403).send('<h2>로그아웃 후에 이용이 가능합니다▶▶▶<a href="/">로그인창으로 이동</a></h2>');
-
-    }
-};

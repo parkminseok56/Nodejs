@@ -1,9 +1,5 @@
 const express = require('express');
 const Member = require('../models/Member');
-
-//------------------------------------------------------------------
-const {inLogginedIn, isNotLoggedIn, isLoggedIn} = require('./middleware');
-//------------------------------------------------------------------
 const router = express.Router();
 
 router.post('/login', async (req, res, next)=>{
@@ -38,18 +34,16 @@ router.get('/joinform', (req,res,next)=>{
 
 //router.get('/',미들웨어들의 나열)
 
-router.post('/insertMember', isNotLoggedIn, async (req,res,next)=>{
+router.post('/insertMember',  async (req,res,next)=>{
     try{
         const member = await Member.create(
             {
                 userid:req.body.userid,
                 name:req.body.name,
                 pwd:req.body.pwd,
-                phone:req.body.phone,
-                email:req.body.email,
             }
         );
-        // res.json(member);
+         res.json(member);
         res.end();
     }catch(err){
         console.error(err);
