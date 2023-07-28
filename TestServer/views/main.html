@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/login.js"></script>
 </head>
-
 <body>
     <div id="wrap">
         <h2>{{loginUser.userid}}({{loginUser.name}}) 님 어서오세요 &nbsp; </h2>
         <input type="button" value="회원정보수정" onClick="location.href='/members/updateForm/{{loginUser.userid}}'">
         <input type="button" value="로그아웃" onClick="location.href='/members/logout/'">
-        <div id="page" style="margin-top: 20px; text-align: center;"></div>
+        <input type="button" value="글쓰기" onClick="location.href='/boards/writeForm'"><br><br>
     </div>
-    <script src="/main.js"></script>
 </body>
-
 </html>

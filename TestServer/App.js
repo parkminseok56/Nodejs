@@ -5,16 +5,17 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
-
 // 변수에 저장된 모듈들은 초기설정 등을 실행해서 사용 가능 상태로 설정합니다.
 const app = express();
 app.set('port', process.env.PORT || 3000);
 app.use( express.static(path.join(__dirname, 'public'))); // 스태틱 폴더설정
 // app.use('/up', express.static(path.join(__dirname, 'upload'))); // 스태틱 폴더는 두개이상 만들수 있습니다. 그러려면 접근 경로를 서로 다르게 지정해줍니다 '/up'
-app.set('view engine', 'html');
-let env = nunjucks.configure('view',{express:app,watch:true,});
 
+const dateFilter = require('nunjucks-date-filter'); 
+// 넌적스에서 사용할 날짜 양식 필터 사용을 위한 모듈
+app.set('view engine', 'html');  // 넌적스 파일 확장자
+let env = nunjucks.configure('views', {express: app, watch: true, }); // 넌적스 설정
+env.addFilter('date', dateFilter);
 
 app.use(cookieParser());
 app.use(session({ resave:false,  saveUninitialized:false,  secret:"rkdgmlwns", }));

@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const nunjucks = require('nunjucks');
+
 router.get('/', (req, res)=>{ 
     if(req.session.loginUser != undefined){
         res.redirect('/main/');
     }else{
-        // nunjucks 엔진에 의한 render
         res.render('login', {});
     }
 });
