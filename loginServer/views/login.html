@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginFailed = urlParams.get('loginFailed');
+
+            if (loginFailed) {
+                const failureReason = urlParams.get('failureReason');
+                alert(failureReason);
+            }
+        };
+    </script>
+    <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<body>
+    <form action="login" method="post">
+        <div class="box">
+            <div id="title">로그인</div>
+        </div>
+        <div class="box">
+            <div class="attr1">아이디</div>
+            <div class="attr2">&nbsp;&nbsp;<input type="text" size="20" name="userid" style="width:200px;height:20px;" id="userid"></div>
+        </div>
+        <div class="box">
+            <div class="attr1">비밀번호</div>
+            <div class="attr2">&nbsp;&nbsp;<input type="password" size="20" name="pwd" id="pwd" style="width:200px;height:20px;"></div>
+        </div>
+        <div class="box">
+            <div id="footer">
+                <input type="submit" value="로그인" />
+                <input type="reset" value="다시작성" />
+                <input type="button" value="카카오로 회원가입 및 로그인" onclick="location.href='kakaostart'">
+            </div>
+        </div>
+    </form>
+</body>
+</html>
